@@ -1,0 +1,50 @@
+velero:
+  podAnnotations:
+    vault.security.banzaicloud.io/vault-role: meta
+    vault.security.banzaicloud.io/service-account: default
+    vault.security.banzaicloud.io/vault-addr: https://vault.default:8200
+    vault.security.banzaicloud.io/vault-tls-secret: vault-tls
+
+  # -- Disable creation of the default BackupStorageLocation.
+  backupsEnabled: false
+  serviceAccount:
+    server:
+      create: false
+      name: default
+
+  configuration:
+    provider: aws
+
+    # -- Inject secrets as environment variables using bank-vaults.
+    extraEnvVars:
+      AWS_ACCESS_KEY_ID: vault:secret/data/velero/b2#AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY: vault:secret/data/velero/b2#AWS_SECRET_ACCESS_KEY
+      AWS_DEFAULT_REGION: eu-central-003
+
+    volumeSnapshotLocation:
+      provider: aws
+
+  initContainers:
+  # -- Enable the AWS plugin
+  - name: velero-plugin-for-aws
+    image: velero/velero-plugin-for-aws:v1.3.0
+    imagePullPolicy: IfNotPresent
+    volumeMounts:
+      - mountPath: /target
+        name: plugins
+
+backupStorageLocation:
+  annotations:
+    vault.security.banzaicloud.io/vault-role: meta
+    vault.security.banzaicloud.io/vault-addr: https://vault.default:8200
+    vault.security.banzaicloud.io/vault-tls-secret: vault-tls
+
+  # -- Set the BackupStorageLocation to be the default.
+  default: true
+
+  provider: aws
+  bucket: rwx-cluster-backup
+
+  config:
+    s3Url: https://s3.eu-central-003.backblazeb2.com
+    region: eu-central-003

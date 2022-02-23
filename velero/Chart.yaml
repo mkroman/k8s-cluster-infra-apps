@@ -1,0 +1,8 @@
+apiVersion: v2
+name: velero
+description: A helm chart for deploying velero
+version: 0.1.0
+dependencies:
+- name: velero
+  version: 2.27.5
+  repository: https://vmware-tanzu.github.io/helm-charts
