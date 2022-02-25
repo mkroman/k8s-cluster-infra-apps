@@ -1,5 +1,5 @@
 bases:
-- github.com/argoproj/argo-workflows/manifests/cluster-install?ref=v3.2.6
+- github.com/argoproj/argo-workflows/manifests/cluster-install?ref=v3.2.8
 patchesStrategicMerge:
 - overlays/production/argo-server-clusterolebinding.yaml
 - overlays/production/workflow-controller-clusterrolebinding.yaml
