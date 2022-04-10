@@ -3,3 +3,4 @@ resources:
 patchesStrategicMerge:
 - overlays/production/argo-server-clusterolebinding.yaml
 - overlays/production/workflow-controller-clusterrolebinding.yaml
+- overlays/production/workflow-controller-configmap.yaml
