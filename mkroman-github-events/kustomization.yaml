@@ -1,0 +1,5 @@
+resources:
+- base/eventbus.yaml
+- base/eventsource.github.yaml
+- base/ingressroute.yaml
+- base/sealedsecret.github-eventsource-webhook.yaml
