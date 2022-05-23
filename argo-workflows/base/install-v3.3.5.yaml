@@ -672,16 +672,19 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: argo
+  namespace: argo
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: argo-server
+  namespace: argo
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: argo-role
+  namespace: argo
 rules:
 - apiGroups:
   - coordination.k8s.io
@@ -962,6 +965,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: argo-binding
+  namespace: argo
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -969,6 +973,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: argo
+  namespace: argo
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -1000,11 +1005,13 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: workflow-controller-configmap
+  namespace: argo
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: argo-server
+  namespace: argo
 spec:
   ports:
   - name: web
@@ -1016,9 +1023,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    workflows.argoproj.io/description: |
+      This service is deprecated. It will be removed in v3.4.
+
+      https://github.com/argoproj/argo-workflows/issues/8441
   labels:
     app: workflow-controller
   name: workflow-controller-metrics
+  namespace: argo
 spec:
   ports:
   - name: metrics
@@ -1038,6 +1051,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: argo-server
+  namespace: argo
 spec:
   selector:
     matchLabels:
@@ -1051,7 +1065,7 @@ spec:
       - args:
         - server
         env: []
-        image: quay.io/argoproj/argocli:v3.3.1
+        image: quay.io/argoproj/argocli:v3.3.5
         name: argo-server
         ports:
         - containerPort: 2746
@@ -1064,9 +1078,12 @@ spec:
           initialDelaySeconds: 10
           periodSeconds: 20
         securityContext:
+          allowPrivilegeEscalation: false
           capabilities:
             drop:
             - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
         volumeMounts:
         - mountPath: /tmp
           name: tmp
@@ -1083,6 +1100,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: workflow-controller
+  namespace: argo
 spec:
   selector:
     matchLabels:
@@ -1097,7 +1115,7 @@ spec:
         - --configmap
         - workflow-controller-configmap
         - --executor-image
-        - quay.io/argoproj/argoexec:v3.3.1
+        - quay.io/argoproj/argoexec:v3.3.5
         command:
         - workflow-controller
         env:
@@ -1106,7 +1124,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.name
-        image: quay.io/argoproj/workflow-controller:v3.3.1
+        image: quay.io/argoproj/workflow-controller:v3.3.5
         livenessProbe:
           failureThreshold: 3
           httpGet:
