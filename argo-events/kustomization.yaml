@@ -1,7 +1,6 @@
-bases:
-- github.com/argoproj/argo-events/manifests/cluster-install?ref=v1.6.3
-- github.com/argoproj/argo-events/manifests/extensions/validating-webhook?ref=v1.6.3
 resources:
+- base/install-v1.7.0.yaml
+- base/install-validating-webhook-v1.7.0.yaml
 - base/eventbus.yaml
 - base/eventsource.github.yaml
 - base/ingressroute.yaml
