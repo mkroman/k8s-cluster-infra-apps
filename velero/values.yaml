@@ -35,7 +35,7 @@ velero:
 
   schedules:
     backups-4x-daily:
-      schedule: '@every 6hours'
+      schedule: '@every 6h'
       template:
         excludedResources:
         - persistentvolumes
