@@ -55,6 +55,8 @@ velero:
         - engineimages.longhorn.io
         includedNamespaces:
         - '*'
+        hooks: {}
+        metadata: {}
         ttl: 720h0m0s
       useOwnerReferencesInBackup: false
 
