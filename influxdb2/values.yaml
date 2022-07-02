@@ -49,6 +49,11 @@ grafana:
   admin:
     existingSecret: grafana-auth
 
+  imageRenderer:
+    enabled: true
+    image:
+      tag: '3.4.2'
+
 
 backup:
   # Create a CronJob resource that takes backups
