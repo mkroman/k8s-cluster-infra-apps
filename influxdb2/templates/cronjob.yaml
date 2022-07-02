@@ -1,0 +1,52 @@
+{{- if .Values.backup.enabled -}}
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "influxdb.fullname" . }}-daily-backups
+spec:
+  schedule: {{ .Values.backup.schedule | quote }}
+  successfulJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: backup
+            image: "{{ .Values.influxdb2.image.repository }}:{{ .Values.influxdb2.image.tag }}"
+            imagePullPolicy: IfNotPresent
+            env:
+            - name: INFLUX_HOST
+              value: "http://{{ template "influxdb.fullname" . }}"
+            - name: INFLUX_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  {{- if .Values.influxdb2.adminUser.existingSecret }}
+                  name: {{ .Values.influxdb2.adminUser.existingSecret -}}
+                  {{ else }}
+                  name: {{ template "influxdb.fullname" . }}-auth
+                  {{- end }}
+                  key: admin-token
+            command: [/bin/sh, -c]
+            args: 
+            - |
+              set -eux
+              env
+              influx backup /data/backup_$(date '+%Y-%m-%d_%H-%M')
+              ls -lr /data
+            volumeMounts:
+            - name: ephemeral-storage
+              mountPath: /data
+          restartPolicy: OnFailure
+          volumes:
+          - name: ephemeral-storage
+            ephemeral:
+              volumeClaimTemplate:
+                spec:
+                  accessModes:
+                  - ReadWriteOnce
+                  resources:
+                    requests:
+                      storage: {{ .Values.influxdb2.persistence.size }}
+                  storageClassName: hdd
+{{- end }}
