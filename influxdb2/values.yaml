@@ -23,6 +23,8 @@ influxdb2:
       traefik.ingress.kubernetes.io/router.tls: "true"
 
 grafana:
+  replicas: 2
+
   grafana.ini:
     server:
       domain: grafana.infra.rwx.im
