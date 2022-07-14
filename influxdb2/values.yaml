@@ -41,7 +41,7 @@ grafana:
       - grafana.infra.rwx.im
 
   persistence:
-    enabled: true
+    enabled: false
     size: 10Gi
 
   envFromSecret: grafana-env
