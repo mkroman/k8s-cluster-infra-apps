@@ -1,9 +1,10 @@
-{{- if .Values.influxdb2.ingress.enabled -}}
+{{- $fullName := .Release.Name -}}
+{{- if .Values.influxdb2.ingress.enabled }}
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: {{ include "influxdb.fullname" . }}-http
+  name: {{ $fullName }}-http
 spec:
   entryPoints:
   - web
@@ -11,10 +12,28 @@ spec:
   - kind: Rule
     match: Host(`{{ .Values.influxdb2.ingress.hostname }}`)
     middlewares:
-    - name: redirect-to-https
-      namespace: rwx
+    - name: {{ $fullName }}-https-redirect
     services:
-    - name: {{ include "influxdb.fullname" . }}
+    - name: {{ $fullName }}
+      kind: Service
+      port: http
+{{- end }}
+---
+{{- if .Values.grafana.ingress.enabled }}
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $fullName }}-grafana-http
+spec:
+  entryPoints:
+  - web
+  routes:
+  - kind: Rule
+    match: Host(`{{ .Values.grafana.ingress.hosts | first }}`)
+    middlewares:
+    - name: {{ $fullName }}-https-redirect
+    services:
+    - name: {{ $fullName }}-grafana
       kind: Service
       port: http
 {{- end }}
