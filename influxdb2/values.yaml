@@ -57,5 +57,5 @@ grafana:
 
 backup:
   # Create a CronJob resource that takes backups
-  enabled: true
+  enabled: false
   schedule: '48 * * * *'
