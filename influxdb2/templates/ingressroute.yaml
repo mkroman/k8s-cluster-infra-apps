@@ -35,5 +35,5 @@ spec:
     services:
     - name: {{ $fullName }}-grafana
       kind: Service
-      port: 3000
+      port: 80
 {{- end }}
