@@ -1,4 +1,4 @@
-{{- if or (.Values.grafana.ingress.enabled) (.values.influxdb2.ingress.enabled) -}}
+{{- if or (.Values.grafana.ingress.enabled) (.Values.influxdb2.ingress.enabled) -}}
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
