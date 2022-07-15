@@ -50,6 +50,17 @@ grafana:
 
   envFromSecret: grafana-env
 
+  sidecar:
+    # -- Enable sidecar that monitors for dashboards from ConfigMaps
+    dashboards:
+      enabled: true
+      # -- The label to watch for
+      label: 'grafana.com/dashboard'
+      # -- The value to match
+      labelValue: 'true'
+      # -- Only monitor ConfigMaps
+      resource: configmap
+
   admin:
     existingSecret: grafana-auth
 
