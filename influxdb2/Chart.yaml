@@ -7,6 +7,7 @@ dependencies:
 - name: influxdb2
   version: 2.1.0
   repository: https://helm.influxdata.com/
+  condition: influxdb2.enabled
 - name: grafana
   version: 6.32.2
   repository: https://grafana.github.io/helm-charts

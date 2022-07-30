@@ -1,4 +1,4 @@
-{{- $fullName := include "influxdb.fullname" . }}
+{{- $fullName := "influxdb2-grafana" }} #include "influxdb.fullname" . }}
 {{ range $path, $_ :=  .Files.Glob  "dashboards/*.json" }}
 {{- $filename := $path | base -}}
 {{- $filenameNoExt := $filename | trimSuffix ".json" }}

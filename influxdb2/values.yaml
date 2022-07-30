@@ -1,4 +1,6 @@
 influxdb2:
+  enabled: false
+
   adminUser:
     existingSecret: influxdb-auth
 
