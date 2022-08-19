@@ -1,5 +1,5 @@
 resources:
-- base/install-v3.3.6.yaml
+- base/install-v3.3.9.yaml
 patchesStrategicMerge:
 - overlays/production/argo-server-clusterolebinding.yaml
 - overlays/production/workflow-controller-clusterrolebinding.yaml
