@@ -1,2 +1,2 @@
 resources:
-- ./manifests/cnpg-1.17.1.yaml
+- ./manifests/cnpg-1.18.0.yaml
