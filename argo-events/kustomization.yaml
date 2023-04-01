@@ -1,6 +1,6 @@
 resources:
-- base/install-v1.7.1.yaml
-- base/install-validating-webhook-v1.7.1.yaml
+- base/install-v1.7.6.yaml
+- base/install-validating-webhook-v1.7.6.yaml
 - base/eventbus.yaml
 - base/eventsource.github.yaml
 - base/ingressroute.yaml
