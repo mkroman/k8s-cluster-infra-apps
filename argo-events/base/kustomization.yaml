@@ -1,0 +1,3 @@
+resources:
+- ./install-v1.7.6.yaml
+- ./install-validating-webhook-v1.7.6.yaml
