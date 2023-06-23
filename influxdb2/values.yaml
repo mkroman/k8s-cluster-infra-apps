@@ -25,6 +25,9 @@ influxdb2:
       traefik.ingress.kubernetes.io/router.tls: "true"
 
 grafana:
+  image:
+    tag: 10.0.1
+
   # -- Set the number of replicas to deploy.
   replicas: 2
 
