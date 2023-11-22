@@ -26,7 +26,7 @@ influxdb2:
 
 grafana:
   image:
-    tag: 10.0.3
+    tag: 10.2.2
 
   # -- Set the number of replicas to deploy.
   replicas: 2
@@ -72,7 +72,7 @@ grafana:
   imageRenderer:
     enabled: true
     image:
-      tag: '3.4.2'
+      tag: '3.8.4'
 
 
 backup:
