@@ -5,7 +5,7 @@ type: application
 version: '0.1.0'
 dependencies:
 - name: influxdb2
-  version: 2.1.1
+  version: 2.1.2
   repository: https://helm.influxdata.com/
   condition: influxdb2.enabled
 - name: grafana
