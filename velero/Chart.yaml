@@ -4,5 +4,5 @@ description: A helm chart for deploying velero
 version: 0.1.0
 dependencies:
 - name: velero
-  version: 5.1.4
+  version: 6.6.0
   repository: https://vmware-tanzu.github.io/helm-charts
